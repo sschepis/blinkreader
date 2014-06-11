@@ -13,7 +13,8 @@
         <!-- endbuild -->
 
         <!-- build:css({.tmp,app}) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" type='text/css' href="styles/main.css">
+        <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Raleway:700'>
         <!-- endbuild -->
 
         <!-- build:js scripts/vendor/modernizr.js -->
@@ -25,20 +26,30 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-    <div id='#controlbar'>
-      <table id='buttonpanel' cellpadding=0 cellspacing=0>
-        <tr>
-          <td><div id='back-btn' class='button'>&lt;&lt;</div></td>
-          <td><div id='slower-btn automargin' class='button'>(-)</div></td>
-          <td><div id='playpause-btn' class='button automargin'>&gt;=</div></td>
-          <td><div id='faster-btn' class='button automargin'>(+)</div></td>
-          <td><div id='next-btn' class='button floatright'>&gt;&gt;</div></td>
-        </tr>
-      </table>
-    </div>
-    <div id='container'>
-      <div id="output">this is some</div>
-    </div>
+        <div id='#locationbar' class="input-group">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </span>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </span>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-minus"></span>
+          </span>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-plus"></span>
+          </span>
+          <span class="input-group-addon" id='playpause-btn'>
+            <span class="glyphicon glyphicon-pause"></span></span>
+                <input type="text" class="form-control" id="location" name="location" />
+          <span class="input-group-btn">
+            <button class="btn btn-default" id='go-button' type="button">Go!</button>
+          </span>
+        </div>
+
+        <div id='container'>
+            <div id="output">this is some</div>
+        </div>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -56,9 +67,8 @@
         <!-- endbower -->
         <!-- endbuild -->
 
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js"></script>
-<link href='http://fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js"></script>
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/affix.js"></script>
@@ -78,5 +88,7 @@
         <!-- build:js scripts/main.js -->
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
+
+        <div id='content-converter' style='display: none'></div>
 </body>
 </html>

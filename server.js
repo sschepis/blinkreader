@@ -2,7 +2,8 @@
 
 var restify = require('restify');
 var async = require('async');
-var qs = require('querystring');
+var readability = require('node-readability');
+var url = require('url');
 
 var config = require('./config');
 
@@ -57,9 +58,22 @@ server.use(restify.jsonp());
 server.use(restify.requestLogger());
 server.use(restify.sanitizePath());
 
+server.get('/url/', function(req, res, next) {
+    readability(url.parse(req.url).query.replace('http:/','http://'),
+        function(err, article, meta) {
+            if(!err) {
+                var resObj = {
+                    title : article.title,
+                    content : article.content
+                };
+                res.send(resObj);
+            }
+            next();
+        });
+});
 
 // serve statically from this dir
-server.get(/.*/, function(req,res,next) {
+server.get(/.*/, function(req, res, next) {
     return restify.serveStatic({
         directory: __dirname,
         default: 'index.html'
