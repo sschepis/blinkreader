@@ -62,6 +62,13 @@ var pause = true;
 var firstWord = BOOKEND;
 var currentWord = BOOKEND;
 
+var debugWords = function(word, visibility) {
+    currentWord = word;
+    if(visibility && word.word)
+        console.log(word.word) + ' ';
+    return true;
+};
+
 var updateWordsOnPage = function(word, visibility) {
     currentWord = word;
     var out = visibility ? word.word : '';
@@ -105,11 +112,18 @@ $('#go-button').click(function() {
     var address = $('#location').val();
     $.get('http://127.0.0.1:8080/url?' + address, function(data) {
         $('#content-converter').html(data.content);
-        var text = $('#content-converter').text();
+        var text = $('#content-converter').text().trim();
         currentWord = firstWord = VisualText.split(text);
         currentWord.play(updateWordsOnPage);
     });
 });
+
+function testBReadability(theurl){
+    read('http://127.0.0.1:8080/p?' + theurl,
+        function(err, article, meta) {
+            console.log(article.content);
+        });
+}
 
 currentWord = firstWord = VisualText.split(texttext);
 currentWord.play(updateWordsOnPage);

@@ -4,6 +4,8 @@ var restify = require('restify');
 var async = require('async');
 var readability = require('node-readability');
 var url = require('url');
+var request = require('request');
+
 
 var config = require('./config');
 
@@ -70,6 +72,14 @@ server.get('/url/', function(req, res, next) {
             }
             next();
         });
+});
+
+server.get('/pthru/', function(req, res, next) {
+    var theUrl = url.parse(req.url).query.replace('http:/','http://');
+    request(theUrl, function(err, response) {
+        res.send(response);
+        next();
+    });
 });
 
 // serve statically from this dir
