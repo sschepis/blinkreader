@@ -110,20 +110,10 @@ $('#playpause-btn').click(function() {
 
 $('#go-button').click(function() {
     var address = $('#location').val();
-    $.get('http://127.0.0.1:8080/url?' + address, function(data) {
-        $('#content-converter').html(data.content);
-        var text = $('#content-converter').text().trim();
-        currentWord = firstWord = VisualText.split(text);
+    $.get('http://127.0.0.1:8080/alchemy/content?' + address, function(data) {
+        currentWord = firstWord = VisualText.split(data.text.text);
         currentWord.play(updateWordsOnPage);
     });
 });
 
-function testBReadability(theurl){
-    read('http://127.0.0.1:8080/p?' + theurl,
-        function(err, article, meta) {
-            console.log(article.content);
-        });
-}
-
-currentWord = firstWord = VisualText.split(texttext);
-currentWord.play(updateWordsOnPage);
+var grid = new hashgrid({ numberOfGrids: 2 });

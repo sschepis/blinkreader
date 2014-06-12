@@ -47,5 +47,9 @@ exports.getConfirmedPath = function() {
 exports.logging = {
     trace : {
         logpath : 'trace.log'
+    },
+    log : {
+        request : false,
+        response : false
     }
 };

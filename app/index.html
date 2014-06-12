@@ -14,6 +14,7 @@
 
         <!-- build:css({.tmp,app}) styles/main.css -->
         <link rel="stylesheet" type='text/css' href="styles/main.css">
+        <link rel="stylesheet" type='text/css' href="styles/hashgrid.css">
         <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Raleway:700'>
         <!-- endbuild -->
 
@@ -41,14 +42,14 @@
           </span>
           <span class="input-group-addon" id='playpause-btn'>
             <span class="glyphicon glyphicon-pause"></span></span>
-                <input type="text" class="form-control" id="location" name="location" />
+                <input type="text" class="form-control input-lg" id="location" name="location" value="http://io9.com/heres-nasas-new-design-for-a-warp-drive-ship-1588948192" />
           <span class="input-group-btn">
-            <button class="btn btn-default" id='go-button' type="button">Go!</button>
+            <button class="btn btn-default btn-primary btn-lg" id='go-button' type="button">Go!</button>
           </span>
         </div>
 
         <div id='container'>
-            <div id="output">this is some</div>
+            <div id="output">blinkreader</div>
         </div>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -69,8 +70,9 @@
 
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/hashgrid/6/hashgrid.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/kerning.js/0.2/kerning.min.js"></script>
 
-        <!-- build:js scripts/plugins.js -->
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/affix.js"></script>
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/alert.js"></script>
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/dropdown.js"></script>
@@ -83,9 +85,7 @@
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/scrollspy.js"></script>
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/collapse.js"></script>
         <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
-        <!-- endbuild -->
-
-        <script id="data-loader" type="x-custom"></script>
+        <script src="bower_components/FlowType.JS/flowtype.js"></script>
 
         <!-- build:js scripts/main.js -->
         <script src="scripts/bundle.js"></script>

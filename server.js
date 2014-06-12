@@ -2,12 +2,11 @@
 
 var restify = require('restify');
 var async = require('async');
-var readability = require('node-readability');
 var url = require('url');
 var request = require('request');
 
-
 var config = require('./config');
+var alchemy = require('./alchemy');
 
 // configure bunyan logger
 var Logger = require('bunyan');
@@ -42,13 +41,17 @@ server.formatters['text/html'] = function (req, res, body) {
 };
 
 // add loggers to pre and after to log all requests
-server.pre(function (req, res, next) {
-    req.log.info({req: req}, 'begin');
-    return next();
-});
-server.on('after', function (req, res, route) {
-    req.log.info({res: res, route: route}, "end");
-});
+if(config.logging.log.request) {
+    server.pre(function (req, res, next) {
+        req.log.info({req: req}, 'begin');
+        return next();
+    });
+}
+if(config.logging.log.response) {
+    server.on('after', function (req, res, route) {
+        req.log.info({res: res, route: route}, "end");
+    });
+}
 
 // set up all our standard server modules
 server.use(restify.acceptParser(server.acceptable));
@@ -60,22 +63,21 @@ server.use(restify.jsonp());
 server.use(restify.requestLogger());
 server.use(restify.sanitizePath());
 
-server.get('/url/', function(req, res, next) {
-    readability(url.parse(req.url).query.replace('http:/','http://'),
-        function(err, article, meta) {
-            if(!err) {
-                var resObj = {
-                    title : article.title,
-                    content : article.content
-                };
-                res.send(resObj);
-            }
+server.get('/alchemy/content/', function(req, res, next) {
+    var targetUrl = url.parse(req.url).query;
+    var targetUrl = targetUrl.indexOf('http://') === -1
+        ? targetUrl.replace('http:/','http://') : targetUrl;
+    alchemy.transmuteURL(targetUrl, ['title', 'text'],
+        function(err, out){
+            res.send(out);
             next();
         });
 });
 
-server.get('/pthru/', function(req, res, next) {
-    var theUrl = url.parse(req.url).query.replace('http:/','http://');
+server.get('/proxy/', function(req, res, next) {
+    var targetUrl = url.parse(req.url).query;
+    var targetUrl = targetUrl.indexOf('http://') === -1
+        ? targetUrl.replace('http:/','http://') : targetUrl;
     request(theUrl, function(err, response) {
         res.send(response);
         next();
