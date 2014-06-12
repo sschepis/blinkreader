@@ -42,9 +42,12 @@ VisualText.prototype.play = function(timeout, callback, complete) {
     var playWord = function(word, visibility, callback) {
         if(callback && !callback(word, visibility)) return;
         if(visibility) {
-            setTimeout(function(){
-                playWord(word, false, callback);
-            }, timeoutOverride != -1 ? timeoutOverride : word.pause);
+            var theTimeout = timeoutOverride != -1 ? timeoutOverride : word.pause;
+            if(theTimeout < 1) playWord(word, false, callback);
+            else
+                setTimeout(function(){
+                    playWord(word, false, callback);
+                }, theTimeout);
         } else {
             if(word) playWord(word.nextWord, true, callback);
             else {
@@ -73,8 +76,9 @@ var debugWords = function(word, visibility) {
 var updateWordsOnPage = function(word, visibility) {
     currentWord = word;
     var out = visibility ? word.word : '';
-    $('#blinkreader span.blink').html(out);
-
+    out = out === '{{NEWLINE}}' ? '' : out;
+    $('#blinkreader div.blink').html(out);
+    recreateText(word);
     var ret = visibility ? !pause : true;
     if(!word.bookend && word.nextWord.bookend && visibility) {
         ret = false;
@@ -90,15 +94,28 @@ var updateWordsOnPage = function(word, visibility) {
 
 var recreateText = function(theWord) {
     var outputText = '';
-    $('#output').html('');
+    var outputP = '<p>';
+    $('#blinkreader div.reader').html('');
     theWord.play(0,
         function(word, visibility) {
             if(visibility && word && word.word) {
-                outputText += '<span style="float:left" id="word' + word.index + '">' + word.word + '&nbsp;</span>';
-                $('#output').append('<span style="float:left" id="word' + word.index + '">' + word.word + '&nbsp;</span>');
+                if(word.word === '{{NEWLINE}}'
+                    || word.nextWord.bookend) {
+                    outputP += '</p>';
+                    outputText += outputP;
+                    $('#blinkreader div.reader')
+                        .append($(outputP))
+                        .css('left', 0)
+                        .css('top', 0);
+                    outputP = '<p>';
+                } else {
+                    var n = '<span style="float:left" id="word'
+                        + word.index + '">'
+                        + word.word
+                        + '&nbsp;</span>';
+                    outputP += word.word + ' ';
+                }
             }
-            if(!visibility && word && word.nextWord && word.nextWord.bookend)
-                $('#output').html(outputText);
             return true;
         });
 };
@@ -130,7 +147,9 @@ $('#playpause-btn').click(function() {
 $('#go-button').click(function() {
     var address = $('#location').val();
     $.get('http://127.0.0.1:8080/alchemy/content?' + address, function(data) {
-        currentWord = firstWord = VisualText.split(data.text.text);
+        var outtext = data.text.text.replace(/\n/g,' {{NEWLINE}} ');
+        console.log(outtext);
+        currentWord = firstWord = VisualText.split(outtext);
         recreateText(currentWord);
         currentWord.play(updateWordsOnPage);
     });
@@ -143,10 +162,11 @@ $(document).ready(function() {
     $("#blinkreader")
         .draggable()
         .resizable();
-    $("#output")
+    $("#output-c")
         .draggable()
         .resizable();
-    $("#blinkreader span.blink")
+    $("#blinkreader div.blink")
         .fitText();
-    //$('#output').flowtype();
+    $('#blinkreader div.reader')
+        .flowtype();
 });

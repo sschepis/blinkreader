@@ -7,3 +7,5 @@ test/bower_components
 .idea/
 .idea/blinkreader.iml
 .idea/workspace.xml
+npm-debug.log
+trace.log

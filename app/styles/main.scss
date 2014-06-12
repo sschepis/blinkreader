@@ -120,7 +120,7 @@ body, html {
   height:100%;
 }
 
-#output {
+#output-c {
   width:640px;
   height:480px;
   opacity: 0.5;
@@ -133,6 +133,13 @@ body, html {
   position:absolute;
   left:250px;
   top:180px;
+}
+
+#output {
+  padding: 10px 10px 10px 10px;
+  width:100%;
+  height:100%;
+  overflow:scroll;
 }
 
 #locationbar {
@@ -164,16 +171,32 @@ body, html {
   position:absolute;
   left:150px;
   top:90px;
+  overflow:hidden;
 }
 
-#blinkreader span.blink {
+#blinkreader div.reader {
+  display:absolute;
+  z-index:1010;
   width: 100%;
-  display: table-cell;
-  vertical-align: middle;
+  height: 100%;
+  margin-top: -300px;
+  padding-left:10px;
+  padding-top:10px;
+  color:#aaa;
+}
+
+#blinkreader div.blink {
+  display:absolute;
+  z-index:1020;
+  width: 100%;
+  height: 100%;
+  line-height: 300px;
   text-align:center;
+  color:#00b3ee;
 }
 
 #blinkreader div.input-group {
-  display: table-cell;
+  display:absolute;
   width: 100%;
+  height:auto;
 }
