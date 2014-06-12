@@ -1,6 +1,3 @@
-$(document).ready(function() {
-    $("#container").fitText(0.85);
-});
 
 var PAUSE_NORMAL = 120;
 var PAUSE_COMMA = 200;
@@ -72,7 +69,7 @@ var debugWords = function(word, visibility) {
 var updateWordsOnPage = function(word, visibility) {
     currentWord = word;
     var out = visibility ? word.word : '';
-    $('#output').html(out);
+    $('#blinkreader span.blink').html(out);
     var ret = visibility ? !pause : true;
     if(!word.bookend && word.nextWord.bookend && visibility) {
         ret = false;
@@ -116,4 +113,13 @@ $('#go-button').click(function() {
     });
 });
 
-var grid = new hashgrid({ numberOfGrids: 2 });
+$(document).ready(function() {
+    new hashgrid({ numberOfGrids: 1 });
+    $( ".draggable" ).draggable();
+    $( ".resizable" ).resizable();
+    $("#blinkreader")
+        .draggable()
+        .resizable();
+    $("#blinkreader span.blink")
+        .fitText();
+});

@@ -4,6 +4,7 @@ var restify = require('restify');
 var async = require('async');
 var url = require('url');
 var request = require('request');
+var path = require('path');
 
 var config = require('./config');
 var alchemy = require('./alchemy');
@@ -87,7 +88,7 @@ server.get('/proxy/', function(req, res, next) {
 // serve statically from this dir
 server.get(/.*/, function(req, res, next) {
     return restify.serveStatic({
-        directory: __dirname,
+        directory: path.join(__dirname, 'app'),
         default: 'index.html'
     })(req, res, next);
 });
