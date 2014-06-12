@@ -165,6 +165,8 @@ body, html {
   background-color:#fff;
   border: 1px solid #333 !important;
   width:640px;
+  min-width:640px;
+  min-height:300px;
   height:300px;
   display:table;
   z-index:1000;

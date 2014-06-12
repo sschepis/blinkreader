@@ -7,7 +7,10 @@
     "jquery": "~1.11.0",
     "FlowType.JS": "*",
     "firebase": "~1.0.17",
-    "fontawesome": "~4.1.0"
+    "fontawesome": "~4.1.0",
+    "annyang": "~1.1.0",
+    "jquery-ui-touch-punch-improved": "~0.3.1",
+    "jquery-touchswipe": "~1.6.6"
   },
   "devDependencies": {}
 }
