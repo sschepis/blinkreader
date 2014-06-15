@@ -66,9 +66,9 @@ server.use(restify.sanitizePath());
 
 server.get('/alchemy/content/', function(req, res, next) {
     var targetUrl = url.parse(req.url).query;
-    var targetUrl = targetUrl.indexOf('http://') === -1
-        ? targetUrl.replace('http:/','http://') : targetUrl;
-    alchemy.transmuteURL(targetUrl, ['title', 'text'],
+        targetUrl = targetUrl.indexOf('http://') === -1 ? 
+            targetUrl.replace('http:/','http://') : targetUrl;
+    alchemy.transmuteURL(targetUrl, alchemy.transmute_options_all,
         function(err, out){
             res.send(out);
             next();
@@ -77,8 +77,8 @@ server.get('/alchemy/content/', function(req, res, next) {
 
 server.get('/proxy/', function(req, res, next) {
     var targetUrl = url.parse(req.url).query;
-    var targetUrl = targetUrl.indexOf('http://') === -1
-        ? targetUrl.replace('http:/','http://') : targetUrl;
+        targetUrl = targetUrl.indexOf('http://') === -1 ? 
+            targetUrl.replace('http:/','http://') : targetUrl;
     request(theUrl, function(err, response) {
         res.send(response);
         next();

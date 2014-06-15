@@ -7,7 +7,11 @@
     "jquery": "~1.11.0",
     "FlowType.JS": "*",
     "firebase": "~1.0.17",
-    "fontawesome": "~4.1.0"
+    "fontawesome": "~4.1.0",
+    "typeplate-starter-kit": "~1.1.4",
+    "lz-string": "*",
+    "impress.js": "~0.5.3",
+    "requirejs": "~2.1.14"
   },
   "devDependencies": {}
 }
