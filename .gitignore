@@ -9,3 +9,4 @@ test/bower_components
 .idea/workspace.xml
 npm-debug.log
 trace.log
+bower_components/
