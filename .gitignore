@@ -10,3 +10,4 @@ test/bower_components
 npm-debug.log
 trace.log
 bower_components/
+trace.log

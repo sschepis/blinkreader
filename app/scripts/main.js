@@ -194,7 +194,26 @@ $('#slower').click(function() {
 $('#faster').click(function() {
 });
 
-$('#playpause-btn').click(function() {
+var play = function() {
+    if(pause && currentWord && currentWord.play) {
+        pause = false;
+        currentWord.play(updateWordsOnPage);
+        $('#playpause-btn .glyphicon')
+            .removeClass('glyphicon-pause')
+            .addClass('glyphicon-play');
+    }
+};
+
+var pause = function() {
+    if(!pause) {
+        pause = true;
+        $('#playpause-btn .glyphicon')
+            .removeClass('glyphicon-play')
+            .addClass('glyphicon-pause');
+    }
+};
+
+var togglePlayPause = function() {
     if(!pause) {
         pause = true;
         $('#playpause-btn .glyphicon')
@@ -208,18 +227,21 @@ $('#playpause-btn').click(function() {
             .removeClass('glyphicon-pause')
             .addClass('glyphicon-play');
     }
-});
+};
+$('#playpause-btn').click(togglePlayPause);
 
-$('#go-button').click(function() {
+var searchButtonPressed = function() {
     var address = $('#location').val();
     $.get('http://0.0.0.0:8080/alchemy/content?' + address, function(data) {
         addLinkToCache(data);
         cueAndPlayText(data.text.text);
     });
-});
+};
+$('#go-button').click(searchButtonPressed);
 
 $(document).ready(function() {
     new hashgrid({ numberOfGrids: 1 });
+<<<<<<< HEAD
 
     $("#blinkreader").dialog({
         width:500,
@@ -240,4 +262,21 @@ $(document).ready(function() {
     $("#blinkreader .blink").css('line-height', $("#blinkreader .reader").css('height'));
 
     updateLinksView();
+
+    if (annyang) {
+        // Let's define our first command. First the text we expect, and then the function it should call
+        var commands = {
+            'go': play(),
+            'stop': pause(),
+            'play': play(),
+            'pause': pause()
+        };
+
+        // Add our commands to annyang
+        annyang.addCommands(commands);
+
+        // Start listening. You can call this here, or attach this call to an event, button, etc.
+        annyang.start();
+    }
 });
+
